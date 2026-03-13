@@ -1,4 +1,5 @@
-import { Target, Database, ShieldCheck } from "lucide-react";
+import { Target, Database, ShieldCheck, ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -7,16 +8,26 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
+
+export interface TileInfo {
+  name: string;
+  description?: string;
+  route?: string;
+}
 
 export interface MenuItem {
   id: string;
   title: string;
   icon: React.ElementType;
-  tiles: string[];
+  tiles: TileInfo[];
 }
 
 export const menuItems: MenuItem[] = [
@@ -25,33 +36,48 @@ export const menuItems: MenuItem[] = [
     title: "1. Model Strategy and Planning",
     icon: Target,
     tiles: [
-      "Business Objective Definition",
-      "Use Case Assessment",
-      "Regulatory & Ethical Considerations",
+      { name: "Business Objective Definition" },
+      { name: "Use Case Assessment" },
+      { name: "Regulatory & Ethical Considerations" },
     ],
   },
   {
     id: "data",
     title: "2. Data Management",
     icon: Database,
-    tiles: ["Data Sourcing", "Data Quality", "Data Governance"],
+    tiles: [
+      { name: "Data Sourcing" },
+      { name: "Data Quality" },
+      { name: "Data Governance" },
+    ],
   },
   {
     id: "governance",
     title: "5. Model Approval & Governance",
     icon: ShieldCheck,
-    tiles: ["Model Review", "Model Approval", "Model Inventory"],
+    tiles: [
+      {
+        name: "Model Review",
+        description:
+          "Prepare consolidated review pack: objectives, risk rating, validation outcomes, controls, dependencies (including third‑party models/data) and mitigation plan. Route per risk rating; ensure independent validation closure; committee approvals recorded; define conditions and expiry; confirm third‑party due diligence obligations.",
+        route: "/model-review",
+      },
+      { name: "Model Approval" },
+      { name: "Model Inventory" },
+    ],
   },
 ];
 
 interface AppSidebarProps {
   activeId: string;
   onSelect: (id: string) => void;
+  activeTile?: string;
 }
 
-export function AppSidebar({ activeId, onSelect }: AppSidebarProps) {
+export function AppSidebar({ activeId, onSelect, activeTile }: AppSidebarProps) {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
+  const navigate = useNavigate();
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
@@ -61,10 +87,76 @@ export function AppSidebar({ activeId, onSelect }: AppSidebarProps) {
             <SidebarMenu>
               {menuItems.map((item) => {
                 const active = activeId === item.id;
+                const hasSubItems = item.tiles.some((t) => t.route);
+
+                if (hasSubItems && !collapsed) {
+                  return (
+                    <Collapsible key={item.id} defaultOpen={active} className="group/collapsible">
+                      <SidebarMenuItem>
+                        <CollapsibleTrigger asChild>
+                          <SidebarMenuButton
+                            onClick={() => {
+                              onSelect(item.id);
+                              navigate("/");
+                            }}
+                            className={cn(
+                              "h-auto py-3 px-4 rounded-lg transition-colors cursor-pointer",
+                              active
+                                ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                                : "hover:bg-sidebar-accent"
+                            )}
+                          >
+                            <item.icon className="h-5 w-5 shrink-0" />
+                            <div className="flex items-center justify-between w-full ml-2">
+                              <span className="text-sm font-medium leading-snug">
+                                {item.title}
+                              </span>
+                              <div className="flex items-center gap-1">
+                                <Badge
+                                  variant={active ? "secondary" : "outline"}
+                                  className={cn(
+                                    "h-5 min-w-5 justify-center text-xs",
+                                    active && "bg-primary-foreground/20 text-primary-foreground border-transparent"
+                                  )}
+                                >
+                                  {item.tiles.length}
+                                </Badge>
+                                <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                              </div>
+                            </div>
+                          </SidebarMenuButton>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {item.tiles
+                              .filter((t) => t.route)
+                              .map((tile) => (
+                                <SidebarMenuSubItem key={tile.name}>
+                                  <SidebarMenuSubButton
+                                    onClick={() => navigate(tile.route!)}
+                                    className={cn(
+                                      "cursor-pointer",
+                                      activeTile === tile.name && "bg-muted font-medium text-primary"
+                                    )}
+                                  >
+                                    <span>{tile.name}</span>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              ))}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </SidebarMenuItem>
+                    </Collapsible>
+                  );
+                }
+
                 return (
                   <SidebarMenuItem key={item.id}>
                     <SidebarMenuButton
-                      onClick={() => onSelect(item.id)}
+                      onClick={() => {
+                        onSelect(item.id);
+                        navigate("/");
+                      }}
                       className={cn(
                         "h-auto py-3 px-4 rounded-lg transition-colors cursor-pointer",
                         active

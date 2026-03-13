@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar, menuItems } from "@/components/AppSidebar";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -6,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 const Index = () => {
   const [activeId, setActiveId] = useState(menuItems[0].id);
   const active = menuItems.find((m) => m.id === activeId)!;
+  const navigate = useNavigate();
 
   return (
     <SidebarProvider>
@@ -33,13 +35,24 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {active.tiles.map((tile) => (
                 <Card
-                  key={tile}
-                  className="min-h-[200px] hover:shadow-md transition-shadow cursor-default"
+                  key={tile.name}
+                  className={`min-h-[200px] transition-shadow ${
+                    tile.route
+                      ? "hover:shadow-md cursor-pointer hover:border-primary/40"
+                      : "cursor-default hover:shadow-md"
+                  }`}
+                  onClick={() => tile.route && navigate(tile.route)}
                 >
                   <CardHeader>
-                    <CardTitle className="text-lg">{tile}</CardTitle>
+                    <CardTitle className="text-lg">{tile.name}</CardTitle>
                   </CardHeader>
-                  <CardContent />
+                  <CardContent>
+                    {tile.description && (
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {tile.description}
+                      </p>
+                    )}
+                  </CardContent>
                 </Card>
               ))}
             </div>
