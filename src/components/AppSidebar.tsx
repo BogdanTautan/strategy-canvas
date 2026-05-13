@@ -1,4 +1,4 @@
-import { Target, Database, ShieldCheck, ChevronDown } from "lucide-react";
+import { Target, Database, ShieldCheck, ChevronDown, Code2, FlaskConical, Rocket, Activity, Wrench, FileText, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
   Sidebar,
@@ -52,6 +52,18 @@ export const menuItems: MenuItem[] = [
     ],
   },
   {
+    id: "development",
+    title: "3. Model Development",
+    icon: Code2,
+    tiles: [],
+  },
+  {
+    id: "validation",
+    title: "4. Model Validation & Testing",
+    icon: FlaskConical,
+    tiles: [],
+  },
+  {
     id: "governance",
     title: "5. Model Approval & Governance",
     icon: ShieldCheck,
@@ -65,6 +77,36 @@ export const menuItems: MenuItem[] = [
       { name: "Model Approval" },
       { name: "Model Inventory" },
     ],
+  },
+  {
+    id: "deployment",
+    title: "6. Model Implementation & Deployment",
+    icon: Rocket,
+    tiles: [],
+  },
+  {
+    id: "monitoring",
+    title: "7. Model Monitoring & Performance Management",
+    icon: Activity,
+    tiles: [],
+  },
+  {
+    id: "maintenance",
+    title: "8. Model Maintenance & Retirement",
+    icon: Wrench,
+    tiles: [],
+  },
+  {
+    id: "documentation",
+    title: "9. Documentation & Auditability",
+    icon: FileText,
+    tiles: [],
+  },
+  {
+    id: "roles",
+    title: "10. Governance Structure & Roles",
+    icon: Users,
+    tiles: [],
   },
 ];
 
