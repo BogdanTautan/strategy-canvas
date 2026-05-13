@@ -132,6 +132,24 @@ export function AppSidebar({ activeId, onSelect, activeTile }: AppSidebarProps) 
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  onClick={() => onSelect("home")}
+                  className={cn(
+                    "h-auto py-3 px-4 rounded-lg transition-colors cursor-pointer",
+                    activeId === "home"
+                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                      : "hover:bg-sidebar-accent"
+                  )}
+                >
+                  <Home className="h-5 w-5 shrink-0" />
+                  {!collapsed && (
+                    <span className="text-sm font-medium leading-snug ml-2">
+                      Home
+                    </span>
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               {menuItems.map((item) => {
                 const active = activeId === item.id;
                 const hasSubItems = item.tiles.some((t) => t.route);
