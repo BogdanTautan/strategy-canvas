@@ -1,4 +1,4 @@
-import { Target, Database, ShieldCheck, ChevronDown, Code2, FlaskConical, Rocket, Activity, Wrench, FileText, Users } from "lucide-react";
+import { Target, Database, ShieldCheck, ChevronDown, Code2, FlaskConical, Rocket, Activity, Wrench, FileText, Users, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
   Sidebar,
