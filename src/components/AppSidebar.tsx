@@ -36,7 +36,12 @@ export const menuItems: MenuItem[] = [
     title: "1. Model Strategy and Planning",
     icon: Target,
     tiles: [
-      { name: "Business Objective Definition" },
+      {
+        name: "Business Objective Definition",
+        description:
+          "The section focuses on how AI should be scoped and governed. It emphasizes the alignment of AI use with clear business needs and intended outcomes, setting governance in proportion to model risk, and designing for fairness, robustness, transparency, and explainability from the beginning. The content also highlights assessing whether AI is truly appropriate for a use case, considering feasibility, data suitability, bias and discrimination risks, and documenting scope, assumptions, and limitations. Finally, it stresses embedding regulatory, ethical, and governance expectations early, including compliance with applicable laws and principles.",
+        route: "/business-objective",
+      },
       { name: "Use Case Assessment" },
       { name: "Regulatory & Ethical Considerations" },
     ],
