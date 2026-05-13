@@ -20,7 +20,7 @@ const Index = () => {
         <div className="flex-1 flex flex-col">
           <header className="h-14 flex items-center border-b border-border px-4">
             <SidebarTrigger />
-            <h1 className="ml-4 text-lg font-semibold text-foreground">
+            <img src={iaaLogo} alt="IAA logo" className="ml-4 h-8 w-auto" /><h1 className="ml-3 text-lg font-semibold text-foreground">
               Model Lifecycle Framework
             </h1>
           </header>
