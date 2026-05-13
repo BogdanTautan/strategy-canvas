@@ -1,3 +1,4 @@
+import iaaLogo from "@/assets/iaa-logo.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar, menuItems } from "@/components/AppSidebar";
