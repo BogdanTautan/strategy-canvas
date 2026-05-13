@@ -1,18 +1,21 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar, menuItems } from "@/components/AppSidebar";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const Index = () => {
-  const [activeId, setActiveId] = useState(menuItems[0].id);
-  const active = menuItems.find((m) => m.id === activeId)!;
+  const { sectionId } = useParams();
   const navigate = useNavigate();
+  const activeId = sectionId ?? menuItems[0].id;
+  const active = menuItems.find((m) => m.id === activeId) ?? menuItems[0];
 
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        <AppSidebar activeId={activeId} onSelect={setActiveId} />
+        <AppSidebar
+          activeId={active.id}
+          onSelect={(id) => navigate(id === "home" ? "/" : `/section/${id}`)}
+        />
 
         <div className="flex-1 flex flex-col">
           <header className="h-14 flex items-center border-b border-border px-4">

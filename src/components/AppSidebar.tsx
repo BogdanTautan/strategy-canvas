@@ -1,4 +1,4 @@
-import { Target, Database, ShieldCheck, ChevronDown, Code2, FlaskConical, Rocket, Activity, Wrench, FileText, Users } from "lucide-react";
+import { Target, Database, ShieldCheck, ChevronDown, Code2, FlaskConical, Rocket, Activity, Wrench, FileText, Users, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
   Sidebar,
@@ -42,8 +42,8 @@ export const menuItems: MenuItem[] = [
           "The section focuses on how AI should be scoped and governed. It emphasizes the alignment of AI use with clear business needs and intended outcomes, setting governance in proportion to model risk, and designing for fairness, robustness, transparency, and explainability from the beginning. The content also highlights assessing whether AI is truly appropriate for a use case, considering feasibility, data suitability, bias and discrimination risks, and documenting scope, assumptions, and limitations. Finally, it stresses embedding regulatory, ethical, and governance expectations early, including compliance with applicable laws and principles.",
         route: "/business-objective",
       },
-      { name: "Use Case Assessment" },
-      { name: "Regulatory & Ethical Considerations" },
+      { name: "Use Case Assessment", description: "This section discusses the early-stage AI use-case assessment and governance. It covers topics such as checking whether AI is actually suitable for the actuarial business need, evaluating data quality, privacy, and security, and considering fairness, bias, discrimination, transparency, and explainability from the start. It also stresses documenting scope and limitations, and recognizing that AI may require stronger validation and monitoring than traditional models.", route: "/use-case-assessment" },
+      { name: "Regulatory & Ethical Considerations", description: "The section focuses on embedding regulation, governance, and fairness into AI design from the start. It emphasizes building AI governance on top of existing data, model, testing, and validation frameworks; aligning with external guidance such as the EU AI Act, MAS FEAT principles, and OECD AI guidance; and treating bias, discrimination, and fairness as key design constraints. It also notes that fairness depends on legal and market context, and that compliance, ethical implications, and data/model documentation should be clearly recorded.", route: "/regulatory-ethical" },
     ],
   },
   {
@@ -132,6 +132,24 @@ export function AppSidebar({ activeId, onSelect, activeTile }: AppSidebarProps) 
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  onClick={() => onSelect("home")}
+                  className={cn(
+                    "h-auto py-3 px-4 rounded-lg transition-colors cursor-pointer",
+                    activeId === "home"
+                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                      : "hover:bg-sidebar-accent"
+                  )}
+                >
+                  <Home className="h-5 w-5 shrink-0" />
+                  {!collapsed && (
+                    <span className="text-sm font-medium leading-snug ml-2">
+                      Home
+                    </span>
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               {menuItems.map((item) => {
                 const active = activeId === item.id;
                 const hasSubItems = item.tiles.some((t) => t.route);
@@ -144,7 +162,6 @@ export function AppSidebar({ activeId, onSelect, activeTile }: AppSidebarProps) 
                           <SidebarMenuButton
                             onClick={() => {
                               onSelect(item.id);
-                              navigate("/");
                             }}
                             className={cn(
                               "h-auto py-3 px-4 rounded-lg transition-colors cursor-pointer",
@@ -202,7 +219,6 @@ export function AppSidebar({ activeId, onSelect, activeTile }: AppSidebarProps) 
                     <SidebarMenuButton
                       onClick={() => {
                         onSelect(item.id);
-                        navigate("/");
                       }}
                       className={cn(
                         "h-auto py-3 px-4 rounded-lg transition-colors cursor-pointer",
