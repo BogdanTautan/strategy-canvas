@@ -219,7 +219,6 @@ export function AppSidebar({ activeId, onSelect, activeTile }: AppSidebarProps) 
                     <SidebarMenuButton
                       onClick={() => {
                         onSelect(item.id);
-                        navigate("/");
                       }}
                       className={cn(
                         "h-auto py-3 px-4 rounded-lg transition-colors cursor-pointer",
